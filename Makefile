@@ -1,5 +1,5 @@
 clean:
-	rm lex.yy.c y.tab.c myCalc
+	rm lex.yy.c y.tab.c y.tab.h myCalc
 
 build:
 	lex myCalc.l

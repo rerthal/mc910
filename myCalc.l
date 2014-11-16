@@ -1,55 +1,27 @@
 %{
+    #include <stdio.h>
+    #include <string.h>
     #include <stdlib.h>
-    #include "calc3.h"
     #include "y.tab.h"
-    void yyerror(char *);
+    void yyerror(const char *str);
 %}
-
 %%
-
-[a-z] { 
-    yylval.sIndex = *yytext - 'a';
-    return VARIABLE;
+[0-9]+ {
+    yylval = atoi(yytext);
+    return NUMBER;
 }
 
-[1-9][0-9]* {
-    yylval.iValue = atoi(yytext);
-    return INTEGER;
+[a-z] {
+    yylval = *yytext - 'a';
+    return IDENTIFIER;
 }
 
-";" {
-    return SEMIC;
-}
+[+*;()] { return *yytext; }
 
-"+" {
-    return SUM;
-}
+print return PRINT;
+:=    return ASSIGN;
 
-"*" {
-    return TIMES;
-}
+[ \n\t] ;
 
-":=" {
-    return ATRIB;
-}
-
-"print" {
-    return PRINT;
-}
-
-"(" {
-    return LPAREN;
-}
-
-")" {
-    return RPAREN;
-}
-
-[\s\t\n]+ ;
-
-. yyerror("Unknown character");
-
+. { yyerror(""); }
 %%
-int yywrap(void) {
-    return 1;
-}
