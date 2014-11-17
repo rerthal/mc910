@@ -3,7 +3,6 @@
     #include <string.h>
     #include <stdlib.h>
     #include "y.tab.h"
-    void yyerror(const char *str);
 %}
 %option yylineno
 %%
@@ -26,5 +25,8 @@ print return PRINT;
 
 [ \t\n] ;
 
-. { yyerror(""); }
+. { 
+    printf("programa invalido!\n");
+    exit(0);
+}
 %%
